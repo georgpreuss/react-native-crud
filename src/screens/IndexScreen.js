@@ -8,6 +8,16 @@ const IndexScreen = ({ navigation }) => {
 
   useEffect(() => {
     getBlogPosts()
+
+    // runs every time IndexScreen is back in focus
+    const listener = navigation.addListener('didFocus', () => {
+      getBlogPosts()
+    })
+
+    // clean up to avoid memory leak
+    return () => {
+      listener.remove()
+    }
   }, [])
   
   return <View>
